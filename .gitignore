@@ -1,0 +1,9 @@
+funnyp/db.sqlite3
+funnyp/funnyp/__pycache__
+funnyp/media/posts_picall
+funnyp/media/posts_pics
+funnyp/media/profile_pics
+funnyp/posts/__pycache__
+funnyp/posts/migrations
+funnyp/users/__pycache__
+funnyp/users/migrations

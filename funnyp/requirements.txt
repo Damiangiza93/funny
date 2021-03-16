@@ -1,0 +1,6 @@
+Django==3.1.1
+gunicorn
+django-crispy-forms==1.9.2
+Pillow==7.2.0
+django-ckeditor
+# ckeditor-uploader

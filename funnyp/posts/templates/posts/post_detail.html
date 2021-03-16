@@ -1,0 +1,77 @@
+{% extends "posts/base.html" %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+    <article class="media content-section">
+        <div class="media-body">
+            <h2 class="article-title">{{ object.title }}</h2>
+            <div class="d-flex flex-row align-items-center mb-1">
+                <div class="me-auto">
+                    <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}">
+                    <a style="text-decoration:none" href="{% url 'user-posts' object.author.username %}">{{ object.author }}</a>
+                </div>
+                {% if object.author == user %}
+                    <div>
+                        <a class="btn btn-secondary btn-sm m-1" href="{% url 'post-update' object.id %}">Edytuj</a>
+                        <a class="btn btn-danger btn-sm m-1" href="{% url 'post-delete' object.id %}">Usuń</a>
+                    </div>
+                {% endif %}
+                <a class="m-1" style="text-decoration:none" href="#">{{ post.category.name }}</a>
+                <small class="text-muted">{{ post.date_posted|date:"d E y" }}</small>
+            </div>
+            <img class ="card-img-top" src="{{ object.image.url }}">
+            <p class="article-content" style="img-fluid">{{ object.content|safe }}</p>
+            <table>
+                <form action="{% url 'like-post' post.pk %}" method="POST">
+                    {% csrf_token %}
+                    {% if liked %}
+                        <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-success btn-sm">Zajebiste</button>
+                    {% else %}
+                        <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-light btn-sm">Zajebiste</button>
+                    {% endif %}
+                </form>
+                <a>  {{ total_likes }}  </a>
+                <form action="{% url 'unlike-post' post.pk %}" method="POST">
+                    {% csrf_token %}
+                    {% if unliked %}
+                        <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-danger btn-sm">Słabe</button>
+                    {% else %}
+                        <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-light btn-sm">Słabe</button>
+                    {% endif %}
+                </form>
+            </table>
+            
+        </div>
+    </article>
+    <article class="media content-section">
+        <div class="card-body">
+            <div class="form-group">
+                <h3>Dodaj Komentarz</h3>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ comment_form|crispy }}
+                        <button type="submit" value="Submit" class="btn btn-secondary m-1">Dodaj</button>
+                    </form>
+            </div>
+            <h3>Komentarze...</h3>
+            {% if not post.comments.all %}
+                Wciąż nie ma komentarzy...
+            {% else %}
+                {% for comment in post.comments.all %}
+                    <div class="media content-section">
+                        <strong>
+                        {{ comment.author }}
+                        {{ comment.date_added }}
+                        </strong>
+                        <br/>
+                        {{ comment.body }}
+                        <br/>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </article>
+    
+{% endblock content %}
+
