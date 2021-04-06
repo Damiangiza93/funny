@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
+from django.db.models import Q
 from django.views.generic import (ListView, DetailView, CreateView,
                                 UpdateView, DeleteView, FormView)
 from django.views.generic.edit import FormMixin
@@ -86,12 +87,11 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     fields = ['title', 'category', 'content', 'zajawka']
     
     def form_valid(self, form):
-        form.instance.author = self.request.user
         return super().form_valid(form)
     
     def test_func(self):
         post = self.get_object()
-        if self.request.user == post.author:
+        if self.request.user.is_superuser:
             return True
         return False
     
@@ -101,7 +101,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     
     def test_func(self):
         post = self.get_object()
-        if self.request.user == post.author:
+        if self.request.user.is_superuser:
             return True
         return False
 
@@ -132,3 +132,11 @@ def UnlikeView(request, pk):
 def CategoryView(request, categories):
     category_posts = Post.objects.filter(category=categories, status='Zaakceptowane').order_by('-date_posted')
     return render(request, 'posts/category.html', {'categories':categories, 'category_posts':category_posts})
+
+def SearchBarView(request):
+    if request.method == 'GET':
+        search = request.GET.get('search')
+        posts = Post.objects.filter(
+                            Q(title__icontains=search) |
+                            Q(content__icontains=search), status='Zaakceptowane').order_by('-date_posted').distinct()
+        return render(request, 'posts/search.html', {'searched_posts': posts})

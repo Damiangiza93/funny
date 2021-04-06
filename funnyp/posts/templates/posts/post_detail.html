@@ -11,12 +11,14 @@
                     <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}">
                     <a style="text-decoration:none" href="{% url 'user-posts' object.author.username %}">{{ object.author }}</a>
                 </div>
-                {% if object.author == user %}
+                
+                    <!-- {% if object.author == user %}{% endif %} -->
+                    {% if user.is_superuser %}
                     <div>
                         <a class="btn btn-secondary btn-sm m-1" href="{% url 'post-update' object.id %}">Edytuj</a>
                         <a class="btn btn-danger btn-sm m-1" href="{% url 'post-delete' object.id %}">Usuń</a>
                     </div>
-                {% endif %}
+                    {% endif %}
                 <a class="m-1" style="text-decoration:none" href="#">{{ post.category.name }}</a>
                 <small class="text-muted">{{ post.date_posted|date:"d E y" }}</small>
             </div>

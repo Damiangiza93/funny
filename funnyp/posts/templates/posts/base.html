@@ -43,11 +43,8 @@
               <a class="nav-item nav-link" href="{% url 'login' %}">Zaloguj się</a>
               <a class="nav-item nav-link" href="{% url 'register' %}">Rejestracja</a>
               {% endif %}
-              <form class="d-flex">
-                <li><input class="form-control me-2" type="search" placeholder="" aria-label="Search"></li>
-                <li><button class="btn btn-outline" type="submit">
-                  <img src="\media\lupa.png" alt="" width="24" height="24" class="d-inline-block align-top">
-                </button></li>
+              <form method='GET' action='{% url "searchbar" %}' class="d-flex">
+                <li><input class="form-control me-2" name='search' type="search" id='id_query' placeholder="Wyszukaj" aria-label="Search" value="{{query}}"></li>
               </form>   
             </div>
           </div>
