@@ -6,7 +6,7 @@ from django.db.models import Count
 
 def popularposts(request):
     return{
-        'popularposts': Post.objects.filter(status='Zaakceptowane').annotate(like_count=Count('likes')-Count('unlikes')).order_by('-like_count')
+        'popularposts': Post.objects.filter(status='Zaakceptowane').annotate(like_count=Count('likes')-Count('unlikes')).order_by('-like_count')[:10]
     }
 
 def userframe(request, *args, **kwargs):

@@ -1,14 +1,21 @@
 from .models import Post, Comment
 from django import forms
+from crispy_forms.helper import FormHelper
 
 class CommentForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+
+        self.fields['body'].widget.attrs['rows'] = 1
+
     class Meta:
         model = Comment
-        fields = ('author', 'body')
+        fields = ('body',)
 
         labels = {
-            'author': 'Autor',
-            'body': 'Treść',
+            'body': '',
         }
 
 

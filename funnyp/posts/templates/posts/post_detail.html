@@ -19,12 +19,13 @@
                         <a class="btn btn-danger btn-sm m-1" href="{% url 'post-delete' object.id %}">Usuń</a>
                     </div>
                     {% endif %}
-                <a class="m-1" style="text-decoration:none" href="#">{{ post.category.name }}</a>
+                <a class="m-1" style="text-decoration:none" href="{% url 'category' post.category.id %}">{{ post.category.name }}</a>
                 <small class="text-muted">{{ post.date_posted|date:"d E y" }}</small>
             </div>
             <img class ="card-img-top" src="{{ object.image.url }}">
             <p class="article-content" style="img-fluid">{{ object.content|safe }}</p>
             <table>
+                {% if user.is_authenticated %}
                 <form action="{% url 'like-post' post.pk %}" method="POST">
                     {% csrf_token %}
                     {% if liked %}
@@ -42,6 +43,11 @@
                         <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-light btn-sm">Słabe</button>
                     {% endif %}
                 </form>
+                {% else %}
+                <a class="btn btn-light btn-sm" href="{% url 'login' %}">Zajebiste</a>
+                <a>  {{ total_likes }}  </a>
+                <a class="btn btn-light btn-sm" href="{% url 'login' %}">Słabe</a>
+                {% endif %}
             </table>
             
         </div>
@@ -49,27 +55,101 @@
     <article class="media content-section">
         <div class="card-body">
             <div class="form-group">
-                <h3>Dodaj Komentarz</h3>
+                {% if user.is_authenticated %}
+                <h5>Dodaj Komentarz</h5>
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         {{ comment_form|crispy }}
                         <button type="submit" value="Submit" class="btn btn-secondary m-1">Dodaj</button>
                     </form>
+                {% else %}
+                <h3>Jeśli chcesz dodać komentarz</h3>
+                <a class="btn btn-success btn-sm" href="{% url 'login' %}">Zaloguj się</a>
+                {% endif %}
             </div>
-            <h3>Komentarze...</h3>
+
+            
             {% if not post.comments.all %}
                 Wciąż nie ma komentarzy...
             {% else %}
+
                 {% for comment in post.comments.all %}
+                    {% if comment.parent == None %}
                     <div class="media content-section">
-                        <strong>
-                        {{ comment.author }}
-                        {{ comment.date_added }}
-                        </strong>
-                        <br/>
-                        {{ comment.body }}
-                        <br/>
-                    </div>
+                        <div class="container">
+                            <div class="row justify-content-start">
+                                <div class="col-1"><img class="rounded-circle comment-img" src="{{ comment.author.profile.image.url }}"></div>
+                                <div class="col">
+                                    <strong>{{ comment.author }}</strong>
+                                    {{ comment.date_added }}
+                                    <br/>
+                                    {{ comment.body }}
+                                </div>
+                            </div>
+                        </div>
+                        <p>
+                            <a class="btn btn-link btn-sm" data-bs-toggle="collapse" href="#collapseExample{{ comment.id }}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                Odpowiedz
+                            </a>
+                        </p>
+                        <div class="collapse" id="collapseExample{{ comment.id }}">
+                            {% if user.is_authenticated %}
+                            <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{ comment_form|crispy }}
+                                <input type='hidden' name='parent_id' value='{{ comment.id }}'>
+                                <button type="submit" value="reply" class="btn btn-link btn-sm">Odpowiedz</button>
+                            </form>
+                            {% else %}
+                            <h3>Jeśli chcesz dodać komentarz</h3>
+                            <a class="btn btn-success btn-sm" href="{% url 'login' %}">Zaloguj się</a>
+                            {% endif %}
+                        </div>
+
+                        {% for child_comment in comment.child %}
+                            <div class="media content-section">
+                                <strong>
+                                    <img class="rounded-circle comment-img" src="{{ child_comment.author.profile.image.url }}">
+                                    {{ child_comment.author }}
+                                    {{ child_comment.date_added }}
+                                </strong>
+                                <br/>
+                                {{ child_comment.body }}
+                                <br/>
+                                <p>
+                                    <a class="btn" data-bs-toggle="collapse" href="#collapseExample{{ child_comment.id }}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        Odpowiedz
+                                    </a>
+                                </p>
+                                <div class="collapse" id="collapseExample{{ child_comment.id }}">
+                                    {% if user.is_authenticated %}
+                                    <form method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        {{ comment_form|crispy }}
+                                        <input type='hidden' name='parent_id' value='{{ child_comment.id }}'>
+                                        <button type="submit" value="reply" class="btn btn-secondary m-1">Odpowiedz</button>
+                                    </form>
+                                    {% else %}
+                                    <h3>Jeśli chcesz dodać komentarz</h3>
+                                    <a class="btn btn-success btn-sm" href="{% url 'login' %}">Zaloguj się</a>
+                                    {% endif %}
+                                </div>
+                                {% for child2_comment in child_comment.child %}
+                                    <div class="media content-section">
+                                        <strong>
+                                            <img class="rounded-circle comment-img" src="{{ child2_comment.author.profile.image.url }}">
+                                            {{ child2_comment.author }}
+                                            {{ child2_comment.date_added }}
+                                        </strong>
+                                        <br/>
+                                        {{ child2_comment.body }}
+                                        <br/>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                        </div>
+                    {% endif %}
                 {% endfor %}
             {% endif %}
         </div>

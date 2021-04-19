@@ -60,9 +60,22 @@ def submission_delete(sender, instance, **kwargs):
 
 class Comment(models.Model):
     post        = models.ForeignKey(Post, related_name="comments", on_delete=models.CASCADE)
-    author      = models.CharField(max_length=100, default='Guest')
+    author      = models.ForeignKey(User, on_delete=models.CASCADE)
     body        = models.TextField()
     date_added  = models.DateTimeField(default=timezone.now)
+    parent      = models.ForeignKey("self", null=True, blank=True, on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ['-date_added']
 
     def __str__(self):
-        return f'{self.post.title} - {self.author}'
+        return f'{self.post.title} - {self.author} - {self.body}'
+
+    def child(self):
+        return Comment.objects.filter(parent=self)
+
+    @property
+    def is_parent(self):
+        if self.parent is not None:
+            return False
+        return True

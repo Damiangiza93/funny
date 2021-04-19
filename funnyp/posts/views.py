@@ -79,6 +79,18 @@ class PostDetailView(FormMixin, DetailView):
 
     def form_valid(self, form):
         form.instance.post = self.object
+        form.instance.author = self.request.user
+
+        try:
+            parent_id = self.request.POST.get("parent_id")
+        except:
+            parent_id = None
+        parent_obj = None
+        if parent_id:
+            parent_qs = Comment.objects.filter(id=parent_id)
+            if parent_qs.exists():
+                parent_obj = parent_qs.first()
+        form.instance.parent = parent_obj
         form.save()
         return super().form_valid(form)
 

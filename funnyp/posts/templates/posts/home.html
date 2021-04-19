@@ -4,7 +4,7 @@
     {% for post in posts %}
         <article class="media content-section">
             <div class="media-body">
-                <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+                <h2 class="text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
                 <div class="d-flex flex-row align-items-center mb-1">
                     <div class="me-auto">
                         <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
