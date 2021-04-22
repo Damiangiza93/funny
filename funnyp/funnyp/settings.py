@@ -78,10 +78,24 @@ AUTH_PASSWORD_VALIDATORS = [
 CKEDITOR_UPLOAD_PATH = 'posts_picall'
 CKEDITOR_CONFIGS = {
     'default': {
-        'toolbar': 'full',
+        'toolbar': 'default',
+        'toolbarCanCollapse' : 'true',
         'width': 'auto',
         'height': 700,
-        
+        'toolbar_default': [
+            ['Preview', '-', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 
+            'Undo', 'Redo', '-', 
+            'Find', 'Change', 'Scayt', '-', 
+            'Link', 'Unlink', 'Anchor', '-',], '/',
+            [ 'Styles', 'Format', 'Font', 'FontSize', '-',
+            'Image', 'Table', 'HorizontalRule', 'SpecialChar', 'Smiley', 'SpecialChar', '-', 
+            'Maximize'], '/',
+            ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 
+            'CopyFormatting', 'RemoveFormat', '-', 'NumberedList', 'BulletedList', '-', 
+            'Outdent', 'Indent', '-', 
+            'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 
+            'BidiLtr', 'BidiRtl', 'Language', 'About']
+        ]
     },
 }
 

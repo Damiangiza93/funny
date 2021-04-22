@@ -141,9 +141,18 @@ def UnlikeView(request, pk):
     post.likes.remove(request.user)
     return HttpResponseRedirect(reverse('post-detail', args=[str(pk)]))
 
-def CategoryView(request, categories):
-    category_posts = Post.objects.filter(category=categories, status='Zaakceptowane').order_by('-date_posted')
-    return render(request, 'posts/category.html', {'categories':categories, 'category_posts':category_posts})
+# def CategoryView(request, categories):
+#     category_posts = Post.objects.filter(category=categories, status='Zaakceptowane').order_by('-date_posted')
+#     return render(request, 'posts/category.html', {'categories':categories, 'category_posts':category_posts})
+
+class CategoryListView(ListView):
+    model = Post
+    template_name = 'posts/category.html'
+    context_object_name = 'category_posts'
+    paginate_by = 10
+
+    def get_queryset(self, **kwargs):
+        return Post.objects.filter(category=self.kwargs['categories'] ,status='Zaakceptowane').order_by('-date_posted')
 
 def SearchBarView(request):
     if request.method == 'GET':

@@ -59,12 +59,14 @@
                 <h5>Dodaj Komentarz</h5>
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
-                        {{ comment_form|crispy }}
-                        <button type="submit" value="Submit" class="btn btn-secondary m-1">Dodaj</button>
+                        <div class="row justify-content-start mb-2">
+                            <div class="col">{{ comment_form|crispy }}</div>
+                            <div class="col-2"><button type="submit" value="Submit" class="btn btn-secondary">Dodaj</button></div>
+                        </div>
                     </form>
                 {% else %}
                 <h3>Jeśli chcesz dodać komentarz</h3>
-                <a class="btn btn-success btn-sm" href="{% url 'login' %}">Zaloguj się</a>
+                <a class="btn btn-success btn-sm mb-3" href="{% url 'login' %}">Zaloguj się</a>
                 {% endif %}
             </div>
 
@@ -81,14 +83,14 @@
                                 <div class="col-1"><img class="rounded-circle comment-img" src="{{ comment.author.profile.image.url }}"></div>
                                 <div class="col">
                                     <strong>{{ comment.author }}</strong>
-                                    {{ comment.date_added }}
+                                    {{ comment.date_added|timesince }} temu
                                     <br/>
                                     {{ comment.body }}
                                 </div>
                             </div>
                         </div>
                         <p>
-                            <a class="btn btn-link btn-sm" data-bs-toggle="collapse" href="#collapseExample{{ comment.id }}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            <a class="btn" data-bs-toggle="collapse" href="#collapseExample{{ comment.id }}" role="button" aria-expanded="false" aria-controls="collapseExample">
                                 Odpowiedz
                             </a>
                         </p>
@@ -96,23 +98,23 @@
                             {% if user.is_authenticated %}
                             <form method="post" enctype="multipart/form-data">
                                 {% csrf_token %}
-                                {{ comment_form|crispy }}
                                 <input type='hidden' name='parent_id' value='{{ comment.id }}'>
-                                <button type="submit" value="reply" class="btn btn-link btn-sm">Odpowiedz</button>
+                                <div class="row justify-content-start mb-2">
+                                    <div class="col">{{ comment_form|crispy }}</div>
+                                    <div class="col-2"><button type="submit" value="reply" class="btn btn-secondary">Odpowiedz</button></div>
+                                </div>
                             </form>
                             {% else %}
-                            <h3>Jeśli chcesz dodać komentarz</h3>
-                            <a class="btn btn-success btn-sm" href="{% url 'login' %}">Zaloguj się</a>
+                            <h6>Jeśli chcesz dodać komentarz</h6>
+                            <a class="btn btn-success btn-sm mb-2" href="{% url 'login' %}">Zaloguj się</a>
                             {% endif %}
                         </div>
 
                         {% for child_comment in comment.child %}
                             <div class="media content-section">
-                                <strong>
                                     <img class="rounded-circle comment-img" src="{{ child_comment.author.profile.image.url }}">
-                                    {{ child_comment.author }}
-                                    {{ child_comment.date_added }}
-                                </strong>
+                                    <strong>{{ child_comment.author }}</strong>
+                                    {{ child_comment.date_added|timesince }} temu
                                 <br/>
                                 {{ child_comment.body }}
                                 <br/>
