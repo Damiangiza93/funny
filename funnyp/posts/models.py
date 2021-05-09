@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.dispatch import receiver
 from ckeditor_uploader.fields import RichTextUploadingField
 from PIL import Image
+from django_resized import ResizedImageField
 
 def upload_location(instance, filename):
     return f'posts_pics/{str(instance.author.id)}/{instance.title}-{filename}'
@@ -25,7 +26,7 @@ class Post(models.Model):
     zajawka     = models.TextField(max_length=200, blank=True, null=True, default=' ')
     date_posted = models.DateTimeField(default=timezone.now)
     author      = models.ForeignKey(User, on_delete=models.CASCADE)
-    image       = models.ImageField(upload_to=upload_location)
+    image       = ResizedImageField(size=[1920, 1080], crop=['middle', 'center'], quality=99, upload_to=upload_location)
     likes       = models.ManyToManyField(User, related_name='blog_post', blank=True)
     unlikes     = models.ManyToManyField(User, related_name='blog_post_u', blank=True)
     category    = models.ForeignKey(Category, on_delete=models.CASCADE, default='1')

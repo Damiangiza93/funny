@@ -20,21 +20,15 @@ class CommentForm(forms.ModelForm):
 
 
 class PostCreateForm(forms.ModelForm):
+
     class Meta:
         model = Post
-        fields = ('title', 'category', 'image', 'content', 'zajawka')
+        fields = ('title', 'category', 'content', 'zajawka')
         labels = {
                 'title': 'Tytuł',
                 'category': 'Kategoria',
-                'image': 'Zdjęcie główne',
                 'content': 'Treść'
             }
         help_texts = {
                 'zajawka': 'Maksymalnie 200 znaków'
         }
-    
-        # error_messages = {
-        #     'name': {
-        #         'max_length': _("This writer's name is too long."),
-        #     },
-        # }

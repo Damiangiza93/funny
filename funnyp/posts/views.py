@@ -37,7 +37,11 @@ class PostCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.author = self.request.user
-        return super().form_valid(form)
+        try:
+            form.instance.image = self.request.FILES.get("image_id")
+            return super().form_valid(form)
+        except:
+            return super().form_invalid(form)
 
 class PostDetailView(FormMixin, DetailView):
     model = Post

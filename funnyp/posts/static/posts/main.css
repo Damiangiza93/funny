@@ -56,6 +56,13 @@ a.article-title:hover {
   margin-right: 16px;
 }
 
+.post-main-img {
+  display: inline-block;
+  width: 490px;
+  height: 270px;
+  object-fit: cover;
+}
+
 .comment-img {
   height: 30px;
   width: 30px;

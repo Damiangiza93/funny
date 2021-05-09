@@ -11,7 +11,7 @@
                         <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
                         <a class="flex-grow-1" style="text-decoration:none" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
                     </div>
-                    <a class="m-1" style="text-decoration:none" href="#">{{ post.category.name }}</a>
+                    <a class="m-1" style="text-decoration:none" href="{% url 'category' post.category.id %}">{{ post.category.name }}</a>
                     <small class="text-muted">{{ post.date_posted|date:"d E y" }}</small>
                 </div>
                 <img class ="card-img-top" src="{{ post.image.url }}">
