@@ -1,23 +1,29 @@
 {% extends "posts/base.html" %}
 
 {% block content %}
-    <h1 class="mb-3">Posty opublikowane przez {{ view.kwargs.username }}: ({{ page_obj.paginator.count }})</h1>
+    <h1 class="mb-3">Posty {{ view.kwargs.username }} ({{ page_obj.paginator.count }}):</h1>
     {% for post in posts %}
-        <article class="media content-section">
+        <article class="media post-section">
             <div class="media-body">
-                <h2 class="text-center"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
-                <div class="d-flex flex-row align-items-center mb-1">
-                    <div class="me-auto">
-                        <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
-                        <a class="flex-grow-1" style="text-decoration:none" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
+                
+                <div class="post-container">
+                    <div class="post-header d-flex flex-row mb-1">
+                        <div class="post-header-inside-left me-auto">
+                            <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
+                            <a class="flex-grow-1 text-white fw-bold" style="text-decoration:none" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
+                        </div>
+                        <div class="post-header-inside-right">
+                            <a class="text-white fw-bold" style="text-decoration:none" text="white" href="{% url 'category' post.category.id %}">{{ post.category.name }}</a>
+                            <small>{{ post.date_posted|date:"d E y" }}</small>
+                        </div>
                     </div>
-                    <a class="m-1" style="text-decoration:none" href="{% url 'category' post.category.id %}">{{ post.category.name }}</a>
-                    <small class="text-muted">{{ post.date_posted|date:"d E y" }}</small>
+                    <img class="card-img-top" src="{{ post.image.url }}">
+                    <div class="post-title">
+                        <h2 class="text-center"><a class="article-title-homepage" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+                        <p class="article-content ">{{ post.zajawka }}</p>
+                    </div>
                 </div>
-                <img class ="card-img-top" src="{{ post.image.url }}">
-                <p class="article-content">{{ post.zajawka }}</p>
             </div>
-            <br>
         </article>
     {% endfor %}
     {% if is_paginated %}

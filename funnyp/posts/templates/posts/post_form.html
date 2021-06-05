@@ -6,42 +6,46 @@
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Stwórz post</legend>
+                <legend class="border-bottom mb-4">Dodaj post</legend>
                 {{ form.media }}
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
                 <div id="wrapper">
+                    <label>Zdjęcie główne* / Wymiary [1920, 1080]</label>
+                    <br>
                     <input id="fileUpload" type="file" name='image_id' message="Proszę dodać zdjęcie"/>
                     <div id="image-holder"></div>
                 </div>
                 {{ form|crispy }}
             </fieldset>
             <div class="form-group m-1">
-                <button class="btn btn-outline-info" type="submit">Dodaj post</button>
+                <button class="btn btn-active" type="submit">Dodaj post</button>
             </div>
         </form>
     </div>
-    
     <script>
-        $("#fileUpload").on('change', function () {
+    $("#fileUpload").on('change', function () {
 
-            if (typeof (FileReader) != "undefined") {
-
-                var image_holder = $("#image-holder");
-                image_holder.empty();
-
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $("<img />", {
-                        "src": e.target.result,
-                        "class": "thumb-image post-main-img"
-                    }).appendTo(image_holder);
-
-                }
-                image_holder.show();
-                reader.readAsDataURL($(this)[0].files[0]);
-            } else {
-                alert("This browser does not support FileReader.");
+        if (typeof (FileReader) != "undefined") {
+    
+            var image_holder = $("#image-holder");
+            image_holder.empty();
+    
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $("<img />", {
+                    "src": e.target.result,
+                    "class": "thumb-image post-main-img-preview"
+                }).appendTo(image_holder);
+    
             }
-        });
+            image_holder.show();
+            reader.readAsDataURL($(this)[0].files[0]);
+        } else {
+            alert("This browser does not support FileReader.");
+        }
+    });
     </script>
+
+    
+    
 {% endblock content %} 

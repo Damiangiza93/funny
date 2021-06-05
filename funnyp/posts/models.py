@@ -5,7 +5,6 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.dispatch import receiver
 from ckeditor_uploader.fields import RichTextUploadingField
-from PIL import Image
 from django_resized import ResizedImageField
 
 def upload_location(instance, filename):
@@ -49,11 +48,6 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         super(Post, self).save(*args, **kwargs)
 
-        img = Image.open(self.image.path)
-        if img.height > 600 or img.width > 1200:
-            output_size = (1200, 600)
-            img.thumbnail(output_size)
-            img.save(self.image.path)
 
 @receiver(post_delete, sender=Post)
 def submission_delete(sender, instance, **kwargs):
@@ -67,7 +61,7 @@ class Comment(models.Model):
     parent      = models.ForeignKey("self", null=True, blank=True, on_delete=models.CASCADE)
 
     class Meta:
-        ordering = ['-date_added']
+        ordering = ['date_added']
 
     def __str__(self):
         return f'{self.post.title} - {self.author} - {self.body}'
