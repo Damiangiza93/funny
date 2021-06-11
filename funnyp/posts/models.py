@@ -29,6 +29,7 @@ class Post(models.Model):
     likes       = models.ManyToManyField(User, related_name='blog_post', blank=True)
     unlikes     = models.ManyToManyField(User, related_name='blog_post_u', blank=True)
     category    = models.ForeignKey(Category, on_delete=models.CASCADE, default='1')
+    view_count  = models.IntegerField(default=0)
 
     STATUS_CHOICES = (('Oczekujace','oczekujące'), ('Zaakceptowane', 'zaakceptowane'))
     status      = models.CharField(max_length=25, choices=STATUS_CHOICES, default='Oczekujące')

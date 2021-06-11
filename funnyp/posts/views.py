@@ -49,6 +49,13 @@ class PostDetailView(FormMixin, DetailView):
     model = Post
     form_class = CommentForm
 
+    def get_object(self):
+        obj = super().get_object()
+        if obj.status == 'Zaakceptowane':
+            obj.view_count += 1
+            obj.save()
+        return obj
+
     def get_success_url(self):
         return reverse_lazy('post-detail', kwargs={'pk': self.object.pk})
 
@@ -72,6 +79,7 @@ class PostDetailView(FormMixin, DetailView):
         context["unliked"]      = unliked
         context["comment_form"] = self.get_form()
         context["comments"]     = self.object.comments.filter()
+        context["views_count"]  = self.object.view_count
 
         return context
 
