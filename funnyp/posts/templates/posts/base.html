@@ -89,12 +89,12 @@
               <div class="post-container">
                 
                   <div class="content-section">
-                    <div class="d-flex flex-row justify-content-center">
-                      <img class="rounded-circle profile-img img-fluid" src="{{ userimage.url }}">
-                      <div class="d-flex flex-column align-items-center">
-                        <a class="flex-grow-1 text-dark fs-3 fw-bold" style="text-decoration:none" href="{% url 'user-posts' user.username %}">{{ current_user.username }}</a>
-                        <div class="d-flex justify-content-center">
-                          <h6 class="points">Punkty: {{ userlikes }}</h6>
+                    <div class="row justify-content-center">
+                      <div class="col-6 col-md-12 col-lg-7"><img class="rounded-circle profile-img" src="{{ userimage.url }}"></div>
+                      <div class="col-6 col-md-12 col-lg-5 d-flex flex-column align-items-center">
+                        <a class="flex-grow-1 text-dark fs-4 fw-bold" style="text-decoration:none" href="{% url 'user-posts' user.username %}">{{ current_user.username }}</a>
+                        <div class="justify-content-center">
+                          <h6 class="points">Punkty:{{ userlikes }}</h6>
                         </div>
                       </div>
                     </div>
@@ -103,7 +103,7 @@
               </div>
           {% endif %}
 
-          <h4 class="text-center najpopularniejsze">Najpopularniejsze</h4>
+          <h4 class="text-center najpopularniejsze font-size:2vw">Najpopularniejsze</h4>
           {% for post in popularposts %}
             <article class="media post-section">
                 <div class="media-body">

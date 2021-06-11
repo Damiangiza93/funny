@@ -31,7 +31,7 @@ class Post(models.Model):
     category    = models.ForeignKey(Category, on_delete=models.CASCADE, default='1')
 
     STATUS_CHOICES = (('Oczekujace','oczekujące'), ('Zaakceptowane', 'zaakceptowane'))
-    status      = models.CharField(max_length=25, choices=STATUS_CHOICES, default='oczekujące')
+    status      = models.CharField(max_length=25, choices=STATUS_CHOICES, default='Oczekujące')
     
     def total_likes(self):
         return self.likes.count()
@@ -40,7 +40,7 @@ class Post(models.Model):
         return self.unlikes.count()
 
     def __str__(self):
-        return self.title
+        return f'{self.title} / {self.status}'
     
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'pk': self.pk})

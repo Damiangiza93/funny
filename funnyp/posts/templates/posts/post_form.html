@@ -12,7 +12,7 @@
                 <div id="wrapper">
                     <label>Zdjęcie główne* / Wymiary [1920, 1080]</label>
                     <br>
-                    <input id="fileUpload" type="file" name='image_id' message="Proszę dodać zdjęcie"/>
+                    <input id="fileUpload" type="file" name='image_id' message="Proszę dodać zdjęcie" oninvalid="alert('brak zdjęcia głównego');" required/>
                     <div id="image-holder"></div>
                 </div>
                 {{ form|crispy }}

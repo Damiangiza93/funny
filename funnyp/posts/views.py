@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
+from django.core.paginator import Paginator
 from django.db.models import Q
 from django.views.generic import (ListView, DetailView, CreateView,
                                 UpdateView, DeleteView, FormView)
@@ -11,11 +12,12 @@ from django.urls import reverse, reverse_lazy
 from .models import Post, Category, Comment
 from .forms import PostCreateForm, CommentForm
 
+
 class PostListView(ListView):
     model = Post
     template_name = 'posts/home.html'
     context_object_name = 'posts'
-    paginate_by = 5
+    paginate_by = 15
 
     def get_queryset(self):
         return Post.objects.filter(status='Zaakceptowane').order_by('-date_posted')
@@ -24,7 +26,7 @@ class UserPostListView(ListView):
     model = Post
     template_name = 'posts/user_posts.html' 
     context_object_name = 'posts'
-    paginate_by = 10
+    paginate_by = 15
     
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
@@ -153,15 +155,31 @@ class CategoryListView(ListView):
     model = Post
     template_name = 'posts/category.html'
     context_object_name = 'category_posts'
-    paginate_by = 10
+    paginate_by = 15
 
     def get_queryset(self, **kwargs):
         return Post.objects.filter(category=self.kwargs['categories'] ,status='Zaakceptowane').order_by('-date_posted')
 
-def SearchBarView(request):
-    if request.method == 'GET':
-        search = request.GET.get('search')
-        posts = Post.objects.filter(
+# def SearchBarView(request):
+#     if request.method == 'GET':
+#         search = request.GET.get('search')
+#         posts = Post.objects.filter(
+#                             Q(title__icontains=search) |
+#                             Q(content__icontains=search), status='Zaakceptowane').order_by('-date_posted').distinct()
+#         paginator = Paginator(posts, 2)
+#         page_number = request.GET.get('page', num)
+#         posts = paginator.page(page_number)
+#         page_obj = paginator.get_page(page_number)
+#         return render(request, 'posts/search.html', {'searched_posts': posts, 'page_obj': page_obj})
+
+class SearchBarView(ListView):
+    model = Post
+    template_name = 'posts/search.html'
+    context_object_name = 'searched_posts'
+    paginate_by = 15
+
+    def get_queryset(self):
+        search = self.request.GET['search']
+        return Post.objects.filter(
                             Q(title__icontains=search) |
                             Q(content__icontains=search), status='Zaakceptowane').order_by('-date_posted').distinct()
-        return render(request, 'posts/search.html', {'searched_posts': posts})

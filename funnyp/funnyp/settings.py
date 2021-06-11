@@ -97,7 +97,7 @@ CKEDITOR_CONFIGS = {
             'CopyFormatting', 'RemoveFormat', '-', 'NumberedList', 'BulletedList', '-', 
             'Outdent', 'Indent', '-', 
             'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 
-            'BidiLtr', 'BidiRtl', 'Language', 'About']
+            'BidiLtr', 'BidiRtl', 'Language', 'ShowBlocks', 'About']
         ]
     },
 }
