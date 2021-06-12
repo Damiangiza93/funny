@@ -22,10 +22,22 @@ ul {
 }
 
 .site-header .navbar-nav .nav-link:hover {
-  color: #00ffff;
+  color: #1400FF;
 }
 
 .site-header .navbar-nav .nav-link.active {
+  font-weight: 500;
+}
+
+.site-header .navbar-nav .navbar-nav .nav-link {
+  color: #ffffff;
+}
+
+.site-header .navbar-nav .navbar-nav .nav-link:hover {
+  color: #FF00D0;
+}
+
+.site-header .navbar-nav .navbar-nav .nav-link.active {
   font-weight: 500;
 }
 
