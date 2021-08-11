@@ -85,12 +85,12 @@
                         <small>{{ comment.date_added|timesince }} temu</small>
                         <div class="m-1">{{ comment.body }}</div>
                     
-                        <a class="btn btn-sm mb-2" data-bs-toggle="collapse" href="#collapseExample{{ comment.id }}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        <a class="btn btn-outline-secondary btn-sm mb-2" data-bs-toggle="collapse" href="#collapseExample{{ comment.id }}" role="button" aria-expanded="false" aria-controls="collapseExample">
                             Odpowiedz
                         </a>
                     
                         {% if comment.child %}
-                        <a class="btn btn-sm mb-2" data-bs-toggle="collapse" href="#collapseExamples{{ comment.id }}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        <a class="btn btn-active btn-sm mb-2" data-bs-toggle="collapse" href="#collapseExamples{{ comment.id }}" role="button" aria-expanded="false" aria-controls="collapseExample">
                             Pokaż odpowiedzi
                         </a>
                         {% endif %}
@@ -114,7 +114,6 @@
                         
                         
                         <div class="collapse" id="collapseExamples{{ comment.id }}">
-                        
                             {% for child_comment in comment.child %}
                                 <div class="media comment-section">
                                     <img class="rounded-circle comment-img" src="{{ child_comment.author.profile.image.url }}">
@@ -123,10 +122,10 @@
                                     <div class="m-1">{{ child_comment.body }}</div>
 
                                     
-                                        <a class="btn btn-sm" data-bs-toggle="collapse" href="#collapseExample{{ child_comment.id }}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        <a class="btn btn-outline-secondary btn-sm" data-bs-toggle="collapse" href="#collapseExample{{ child_comment.id }}" role="button" aria-expanded="false" aria-controls="collapseExample">
                                             Odpowiedz
                                         </a>
-                                    
+                                        
                                     <div class="collapse" id="collapseExample{{ child_comment.id }}">
                                         {% if user.is_authenticated %}
                                         <form method="post" enctype="multipart/form-data">
@@ -142,15 +141,17 @@
                                         <a class="btn btn-success btn-sm mb-2" href="{% url 'login' %}">Zaloguj się</a>
                                         {% endif %}
                                     </div>
-
-                                    {% for child2_comment in child_comment.child %}
-                                        <div class="media comment-section">
-                                            <img class="rounded-circle comment-img" src="{{ child2_comment.author.profile.image.url }}">
-                                            <strong>{{ child2_comment.author }}</strong>
-                                            {{ child2_comment.date_added|timesince }} temu
-                                            <div class="m-1">{{ child2_comment.body }}</div>
-                                        </div>
-                                    {% endfor %}
+                                    
+                                    <div class="m-1">
+                                        {% for child2_comment in child_comment.child %}
+                                            <div class="media comment-section">
+                                                <img class="rounded-circle comment-img" src="{{ child2_comment.author.profile.image.url }}">
+                                                <strong>{{ child2_comment.author }}</strong>
+                                                {{ child2_comment.date_added|timesince }} temu
+                                                <div class="m-1">{{ child2_comment.body }}</div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
 
                                 </div>
                             {% endfor %}

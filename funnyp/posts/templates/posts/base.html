@@ -104,15 +104,16 @@
                 
               </div>
           {% endif %}
-
-          <h4 class="text-center najpopularniejsze font-size:2vw">Najpopularniejsze</h4>
+          <div class="najpopularniejsze">
+            <p class="text-center">Najpopularniejsze</p>
+          </div>
           {% for post in popularposts %}
             <article class="media post-section">
                 <div class="media-body">
                   <div class="post-container">
                     <img class="card-img-top" src="{{ post.image.url }}">
                     <div class="post-title">
-                        <h5 class="text-center"><a class="article-title-homepage" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h5>
+                        <h6 class="text-center"><a class="article-title-homepage" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h6>
                     </div>
                   </div>  
                 </div>

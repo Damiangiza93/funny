@@ -146,7 +146,7 @@ a.article-title:hover, a.article-title-homepage:hover {
 
 .article-sneak {
   white-space: pre-line;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .article-img {
@@ -241,14 +241,13 @@ a.article-title:hover, a.article-title-homepage:hover {
   height: 30px;
 }
 
+
 .najpopularniejsze {
   background: rgb(255,0,207);
   background: linear-gradient(270deg, rgba(255,0,207,1) 0%, rgba(170,0,255,1) 56%, rgba(20,0,255,1) 100%);
   color: white;
-  padding-left: 15px;
-  padding-right: 15px;
   border-radius: 5px;
-  height: 30px;
+  font-size: 20px;
 }
 
 

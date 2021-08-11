@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from .models import Post, Category, Comment
+from users.models import Profile
 from pprint import pprint
 
 
@@ -12,9 +13,9 @@ class ViewsTestCase(TestCase):
     def setUp(self):
         self.category1 = Category.objects.create(name='category1')
         self.category2 = Category.objects.create(name='category2')
-        self.user1 = User.objects.create_user('testuser', 'testuser@invalid.com', 'passwordtest')
+        self.user1 = User.objects.create_user('user1', 'testuser@mail.com', 'passwordtest')
         self.post1 = Post.objects.create(title='post', content='content', author=self.user1, category=self.category1, image='posts_pics/2/2_post_moska-IMG_20160726_203431.jpg', status='Zaakceptowane')
-        self.post1.likes.set(self.user1)
+        self.post1.likes.add(self.user1)
         self.post2 = Post.objects.create(title='post2', content='content2', author=self.user1, category=self.category2, image='posts_pics/2/2_post_moska-IMG_20160726_203431.jpg', status='Zaakceptowane')
 
     def test_post_list_view(self):
@@ -25,7 +26,7 @@ class ViewsTestCase(TestCase):
         self.assertEqual(list(set(posts)), list(Post.objects.all()))
     
     def test_user_post_list_view(self):
-        response = self.client.get(reverse('user-posts', args=['testuser']))
+        response = self.client.get(reverse('user-posts', args=['user1']))
         posts = response.context['posts']
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'posts/user_posts.html')
