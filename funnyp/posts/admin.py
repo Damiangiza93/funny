@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import Post, Category, Comment
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'status', 'date_posted')
+    list_display = ('title', 'status', 'date_posted', 'category', 'view_count')
 
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('post', 'author', 'body', 'date_added')

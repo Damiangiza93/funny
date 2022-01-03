@@ -4,4 +4,5 @@ gunicorn
 django-crispy-forms==1.9.2
 Pillow==7.2.0
 django-ckeditor
-livereload
+django-livereload-server
+django_resized

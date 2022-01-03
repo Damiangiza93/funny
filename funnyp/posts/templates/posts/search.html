@@ -2,6 +2,7 @@
 
 {% block content %}
 {% if searched_posts %}
+    <h2 class='text-center'>Posty dla wyszukiwania: {{ search_text }}</h2>
     {% for post in searched_posts %}
     <article class="media post-section">
         <div class="media-body">

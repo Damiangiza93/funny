@@ -191,3 +191,8 @@ class SearchBarView(ListView):
         return Post.objects.filter(
                             Q(title__icontains=search) |
                             Q(content__icontains=search), status='Zaakceptowane').order_by('-date_posted').distinct()
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['search_text'] = self.request.GET['search']
+        return context
