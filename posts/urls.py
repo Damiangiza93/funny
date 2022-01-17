@@ -4,7 +4,6 @@ from .views import (PostListView, PostDetailView,
                     PostDeleteView, UserPostListView,
                     LikeView, UnlikeView,
                     SearchBarView, CategoryListView)
-from . import views
 
 urlpatterns = [
     path('', PostListView.as_view(), name='blog-home'),

@@ -23,6 +23,7 @@ class UserUpdateForm(forms.ModelForm):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields =['image']
+        fields =['image', 'background']
         labels = {
-            'image': 'Zdjęcie profilowe'}
+            'image': 'Zdjęcie profilowe',
+            }

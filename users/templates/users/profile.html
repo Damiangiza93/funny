@@ -3,16 +3,16 @@
 {% load crispy_forms_tags %}
 {% block content %}
     
-  <div class="content-section">
-    <div class="media">
-      <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
-      <div class="media-body">
-        <h2 class="account-heading">{{ user.username }}</h2>
-        <p class="text-secondary"> {{ user.email }} </p>
+  <div class="profile-section">
+    <div class="text-center account-background" style="background-image: url({{ current_user.profile.background.image.url }})">
+      <img class="rounded-circle account-img ms-3 mt-3" src="{{ user.profile.image.url }}">
+      <div class="account-heading-opacity">
+        <h2 class="account-heading text-break">{{ user.username }}</h2>
+        <p class="account-heading-mail"> {{ user.email }} </p>
       </div>
     </div>
-    <!-- FORM HERE -->
-    <form method="POST" enctype="multipart/form-data">
+    
+    <form method="POST" enctype="multipart/form-data" style="padding: 10px 20px">
         {% csrf_token %}
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">Informacje o Profilu</legend>
@@ -27,7 +27,17 @@
                 <div id="image-holder"></div>
             </div>
         </fieldset>
-        <br>
+        <div class="my-3">
+            <h6 class="text-center">Tło profilowe</h6>
+            <div class="row">
+            {% for background in backgrounds %}
+                <div class="col">
+                    <input type="radio" id="{{ background.name }}" name="background" value="{{ background.id }}">
+                    <label for="{{ background.name }}"><img class="background-img-preview"src="{{ background.image.url }}"></label>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
         <div class="form-group m-1">
             <button class="btn btn-active" type="submit">Uaktualnij</button>
         </div>

@@ -57,7 +57,7 @@ def submission_delete(sender, instance, **kwargs):
 class Comment(models.Model):
     post        = models.ForeignKey(Post, related_name="comments", on_delete=models.CASCADE)
     author      = models.ForeignKey(User, on_delete=models.CASCADE)
-    body        = models.TextField()
+    body        = models.TextField(max_length=500)
     date_added  = models.DateTimeField(default=timezone.now)
     parent      = models.ForeignKey("self", null=True, blank=True, on_delete=models.CASCADE)
 

@@ -1,32 +1,10 @@
-{% extends "posts/base.html" %}
+{% extends "posts/home.html" %}
 
-{% block content %}
-{% if searched_posts %}
+{% block begin %}
     <h2 class='text-center'>Posty dla wyszukiwania: {{ search_text }}</h2>
-    {% for post in searched_posts %}
-    <article class="media post-section">
-        <div class="media-body">
-            
-            <div class="post-container">
-                <div class="post-header d-flex flex-row mb-1">
-                    <div class="post-header-inside-left me-auto">
-                        <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
-                        <a class="flex-grow-1 text-white fw-bold" style="text-decoration:none" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
-                    </div>
-                    <div class="post-header-inside-right">
-                        <a class="text-white fw-bold" style="text-decoration:none" text="white" href="{% url 'category' post.category.id %}">{{ post.category.name }}</a>
-                        <small>{{ post.date_posted|date:"d E y" }}</small>
-                    </div>
-                </div>
-                <img class="card-img-top" src="{{ post.image.url }}">
-                <div class="post-title">
-                    <h4 class="text-center"><a class="article-title-homepage" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
-                    <p class="article-sneak">{{ post.zajawka }}</p>
-                </div>
-            </div>
-        </div>
-    </article>
-    {% endfor %}
+{% endblock begin %}
+
+{% block pagination %}
     {% if is_paginated %}
         <div class="text-center">
             {% if page_obj.has_previous %}
@@ -48,7 +26,4 @@
             {% endif %}
         </div>
     {% endif %}
-{% else %}
-    <h1> Nie znaleziono żadnych postów. Spróbuj jeszcze raz </h1>
-{% endif %}
-{% endblock content %}
+{% endblock pagination %}

@@ -154,36 +154,18 @@ def UnlikeView(request, pk):
         unliked = True
     post.likes.remove(request.user)
     return HttpResponseRedirect(reverse('post-detail', args=[str(pk)]))
-
-# def CategoryView(request, categories):
-#     category_posts = Post.objects.filter(category=categories, status='Zaakceptowane').order_by('-date_posted')
-#     return render(request, 'posts/category.html', {'categories':categories, 'category_posts':category_posts})
-
 class CategoryListView(ListView):
     model = Post
-    template_name = 'posts/category.html'
-    context_object_name = 'category_posts'
+    template_name = 'posts/home.html'
+    context_object_name = 'posts'
     paginate_by = 15
 
     def get_queryset(self, **kwargs):
         return Post.objects.filter(category=self.kwargs['categories'] ,status='Zaakceptowane').order_by('-date_posted')
-
-# def SearchBarView(request):
-#     if request.method == 'GET':
-#         search = request.GET.get('search')
-#         posts = Post.objects.filter(
-#                             Q(title__icontains=search) |
-#                             Q(content__icontains=search), status='Zaakceptowane').order_by('-date_posted').distinct()
-#         paginator = Paginator(posts, 2)
-#         page_number = request.GET.get('page', num)
-#         posts = paginator.page(page_number)
-#         page_obj = paginator.get_page(page_number)
-#         return render(request, 'posts/search.html', {'searched_posts': posts, 'page_obj': page_obj})
-
 class SearchBarView(ListView):
     model = Post
     template_name = 'posts/search.html'
-    context_object_name = 'searched_posts'
+    context_object_name = 'posts'
     paginate_by = 15
 
     def get_queryset(self):

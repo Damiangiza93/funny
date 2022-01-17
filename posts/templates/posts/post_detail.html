@@ -8,7 +8,7 @@
             <h2 class="article-title">{{ object.title }}</h2>
             <div class="d-flex flex-row align-items-center mb-1">
                 <div class="me-auto">
-                    <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}">
+                    <img class="rounded-circle article-author-img" src="{{ object.author.profile.image.url }}">
                     <a style="text-decoration:none" href="{% url 'user-posts' object.author.username %}">{{ object.author }}</a>
                 </div>
                 
