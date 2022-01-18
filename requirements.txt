@@ -6,3 +6,4 @@ Pillow==9
 django-ckeditor
 django-livereload-server
 django_resized
+django-cleanup

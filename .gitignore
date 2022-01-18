@@ -3,6 +3,7 @@ funnyp/__pycache__
 media/posts_picall
 media/posts_pics
 media/profile_pics
+media/backgrounds
 posts/__pycache__
 posts/migrations
 users/__pycache
