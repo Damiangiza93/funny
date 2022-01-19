@@ -22,15 +22,13 @@ def profile(request):
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
-        
+
         if u_form.is_valid() and p_form.is_valid():
-            if 'image_id' in request.FILES:
-                p_form.instance.image = request.FILES["image_id"]
-            if 'background' in request.FILES:
-                p_form.instance.background.id = request.get["background"]
             u_form.save()
             p_form.save()
             messages.success(request, f'Twoje konto zostało zaktualizowane!')
+        else:
+            messages.warning(request, f'Co ty wpisujesz ?? Sprawdź czy twój formularz jest git')
         return redirect('profile')
 
     else:

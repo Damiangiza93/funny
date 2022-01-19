@@ -18,11 +18,10 @@
         {{ u_form|crispy }}
         <br>
         
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <div id="wrapper">
             <label>Zdjęcie profilowe* / Wymiary [125, 125]</label>
             <br>
-            <input id="fileUpload" type="file" name='image_id' message="Proszę dodać zdjęcie"/>
+            <input id="fileUpload" type="file" name='image' message="Proszę dodać zdjęcie"/>
             <div id="image-holder"></div>
         </div>
         
@@ -31,12 +30,17 @@
             <div class="row">
             {% for background in backgrounds %}
                 <div class="col">
+                    {% if background.id == user.profile.background.id %}
+                    <input type="radio" id="{{ background.name }}" name="background" value="{{ background.id }}" checked>
+                    {% else %}
                     <input type="radio" id="{{ background.name }}" name="background" value="{{ background.id }}">
+                    {% endif %}
                     <label for="{{ background.name }}"><img class="background-img-preview"src="{{ background.image.url }}"></label>
                 </div>
             {% endfor %}
             </div>
         </div>
+        
         <div class="m-1">
             <button class="btn btn-active" type="submit">Uaktualnij</button>
         </div>
