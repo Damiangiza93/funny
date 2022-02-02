@@ -62,11 +62,6 @@ ul {
   width: 100%;
 }
 
-.collapse.in {        
-  display: block;       
-}
-
-
 
 
 /* POST CSS */
@@ -190,40 +185,13 @@ a.article-title:hover, a.article-title-homepage:hover {
 }
 
 
-/* NIEWIEM PO CO */
-
-.post-main-img {
-  display: inline-block;
-  width: 960px;
-  height: 540px;
-  object-fit: cover;
-}
-
-.article-metadata {
-  padding-bottom: 1px;
-  margin-bottom: 4px;
-  border-bottom: 3px solid #e3e3e3
-}
-
-.article-metadata a:hover {
-  color: #000000fd;
-  text-decoration: none;
-}
-
-.article-svg {
-  width: 25px;
-  height: 25px;
-  vertical-align: middle;
-}
-
-
 /* ACCOUNT CSS*/
 
 .account-img {
   height: auto;
   width: auto;
-  margin-right: 20px;
   margin-bottom: 16px;
+  border: blur(10px) inline;
 }
 
 .account-img-preview {
@@ -285,7 +253,6 @@ a.article-title:hover, a.article-title-homepage:hover {
   border-radius: 30px;
   height: 30px;
 }
-
 
 .najpopularniejsze {
   background: rgb(255,0,207);
